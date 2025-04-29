@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 
  const shopSchema = new mongoose.Schema({
+    shopname:{
+        type:String,
+        required:true,
+    },
     email:{
         type:String,
         required:true,

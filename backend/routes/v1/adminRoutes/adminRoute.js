@@ -7,7 +7,9 @@ import { adminAuthorizeRole } from '../../../middleware/admin/adminAuthorizeRole
 const adminRouter = express.Router();
 
 adminRouter.post('/login',loginAdmin);
-adminRouter.post('/create-employee',verifyAuthAdminToken,adminAuthorizeRole( "admin"),CreateEmployee)
+
+// protected routes
+adminRouter.post('/create-employee',verifyAuthAdminToken,adminAuthorizeRole("admin"),CreateEmployee)
 
 
  

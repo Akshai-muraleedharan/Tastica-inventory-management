@@ -1,6 +1,6 @@
 
 export const staffAuthorizeRole = (...roles) => {
-  console.log(roles)
+ 
     return (req, res, next) => {
         if (!req.user ) {
             

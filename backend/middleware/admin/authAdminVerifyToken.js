@@ -14,7 +14,7 @@ export const verifyAuthAdminToken = (req, res, next) => {
             return res.status(403).json({success:false,message:"Forbidden"})
         }
         
-        req.user = decoded
+        req.admin = decoded
         next()
     })
 

@@ -44,7 +44,7 @@ export const loginUser = async (req,res) => {
 
         const {password:pass,...userData} = userExist._doc;
 
-        res.cookie("token",token,{httpOnly:true,secure:true,sameSite:"none",maxAge:5 * 60 * 1000}).status(200).json({
+        res.cookie("token",token,{httpOnly:true,secure:true,sameSite:"none",maxAge:24 * 60 * 60}).status(200).json({
             success:true,
             message:"Login Successfully",
             userData

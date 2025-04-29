@@ -50,6 +50,15 @@ export const LoginValidation = Joi.object({
 
 
 export const shopSignupValidtaion = Joi.object({
+
+    shopname: Joi.string().min(3).max(30).required().messages({
+        'string.required': 'Shop name is required',
+        'string.base': 'Shop name must be a string',
+        'string.empty': 'Shop name cannot be empty',
+        'string.min': 'Shop name must be at least 3 characters long',
+        'string.max': 'Shop name must be at most 30 characters long',   
+    }),
+
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required().messages({
         'string.required': 'Email is required',
         'string.base': 'Email must be a string',
@@ -65,3 +74,16 @@ export const shopSignupValidtaion = Joi.object({
         'string.pattern.base': 'Password must contain only letters, numbers or characters',
     }),
 })
+
+export const shopLoginValidation = Joi.object({
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required().messages({
+        'string.required': 'Email is required',
+        'string.base': 'Email must be a string',
+        'string.empty': 'Email cannot be empty',
+        'string.email': 'Email must be a valid email address',
+    }),
+    password:Joi.string().min(8).max(20).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required().messages({
+        'string.required': 'Password is required',
+        'string.empty': 'Password cannot be empty',
+    })
+}) 

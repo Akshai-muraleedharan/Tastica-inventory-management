@@ -42,7 +42,7 @@ export const loginAdmin = async (req,res) => {
 
         const {password:pass,...adminData} = adminExist._doc;
 
-        res.cookie("adminToken",adminToken,{httpOnly:true,secure:true,sameSite:"none",maxAge:86400}).status(200).json({
+        res.cookie("adminToken",adminToken,{httpOnly:true,secure:true,sameSite:"none",maxAge:24 * 60 * 60}).status(200).json({
             success:true,
             message:"admin Login Successfully",
             adminData
