@@ -36,9 +36,30 @@ describe("Test the root path and endpoints of staff routes",() => {
           }
     })
 
+    it('Test userExist', async () => {
+      const response = await request(app).post('/api/v1/staff/login').send({
+       phonenumber:"9302748344",
+       password:"akshai984",
+      })
+      .set('Accept', 'application/json')
+      expect(response.statusCode).toBe(400)
+      expect(response.body).toEqual({success:false,message:"User not found"})
+    
+})
+
+it('Test password is correct', async () => {
+      const response = await request(app).post('/api/v1/staff/login').send({
+        username:"9302748564",
+        password:"akshai983"
+      }).set('Accept', 'application/json')
+
+      expect(response.statusCode).toBe(400)
+      expect(response.body).toEqual({success:false,message:"Invalid credentials"})
+})
+
  
 
-    it("POST staff /api/login", async () => {
+    it("POST staff login  /api/login", async () => {
         const response = await request(app).post('/api/v1/staff/login').send({
             phonenumber:"9302748564",
             password:"akshai984",
@@ -49,6 +70,8 @@ describe("Test the root path and endpoints of staff routes",() => {
     })
 
 })
+
+
 
 
 describe("Test the admin route and protected route", () => {
@@ -65,16 +88,19 @@ describe("Test the admin route and protected route", () => {
             console.error('Error disconnecting from MongoDB:', error);
           }
     })
-
+ 
+    const adminToken = jwt.sign({id:"680e76f3249cda3f70058a08",role:"admin"},process.env.JWT_SECRET_key,{expiresIn:"1d"})
+  console.log(adminToken)
     //  for admin login 
     it("POST /api/login-admin",async () => {
 
       const response = await request(app).post('/api/v1/admin/login').send({
         phonenumber:"9394857465",
 	      password:"akshai984"	
-      })
+      }).set("Content-Type","application/json")
       expect(response.statusCode).toBe(200)
       expect(response.body).toEqual({success:true,message:"admin Login Successfully"})
+      
       
     })
 
@@ -83,19 +109,22 @@ describe("Test the admin route and protected route", () => {
         expect(response.statusCode).toBe(401)
       })
 
+      
+
     it("POST /api/create-employee", async () => {
       
-      const token = jwt.sign({id:"64f3b0a2c4d5e1f8b8c4d5e1",role:"admin"},process.env.JWT_SECRET_KEY,{expiresIn:"1d"})
+    
         const response = await request(app).post('/api/v1/admin/create-employee')
-        .auth(token,{type:"Bearer"}).send({
-            username: "testuser16",
-            email: "test16@gmail.com",
-            phonenumber:"9200194578",
+        .set("Authorization",`Bearer ${adminToken}`)
+        .send({
+            username: "testuser18",
+            email: "test18@gmail.com",
+            phonenumber:"9200394578",
             password:"test01kg",
         })
+        
         expect(response.statusCode).toBe(201);
         expect(response.body).toEqual({success:true,message:"User Created Successfully"})       
-        
         
     })
 })

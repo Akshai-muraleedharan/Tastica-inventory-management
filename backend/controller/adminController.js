@@ -5,7 +5,7 @@ import bcryptjs from 'bcryptjs';
 import {userSignupValidation} from '../utils/joiValidation.js';
 import { generateToken } from "../utils/generateToken.js";
 
-
+ 
 
 
 export const loginAdmin = async (req,res) => {
@@ -17,7 +17,7 @@ export const loginAdmin = async (req,res) => {
       }
 
       const {phonenumber,password} = value;
-      const tokenExist = req.cookies.adminToken;
+      // const tokenExist = req.cookies.adminToken;
 
       const adminExist = await AdminStaffModel.findOne({phonenumber:phonenumber});
       
@@ -31,27 +31,30 @@ export const loginAdmin = async (req,res) => {
             return res.status(400).json({success:false,message:"Invalid credentials"})
         }
 
-         await AdminStaffModel.findOneAndUpdate({phonenumber:phonenumber},{isLoggedIn:true},{new:true});
+        //  await AdminStaffModel.findOneAndUpdate({phonenumber:phonenumber},{isLoggedIn:true},{new:true});
 
-        if(tokenExist){
-            return res.status(400).json({success:false,message:"User already logged in"})
-        }
+        // if(tokenExist){
+        //     return res.status(400).json({success:false,message:"User already logged in"})
+        // }
         
       // generate token
         const adminToken = generateToken({id:adminExist._id,role:adminExist.role});
 
+        const {password:pass,...adminData} = adminExist._doc;
+
         res.cookie("adminToken",adminToken,{httpOnly:true,secure:true,sameSite:"none",maxAge:86400}).status(200).json({
             success:true,
             message:"admin Login Successfully",
-           
+            adminData
         })
 
     }catch(error){
-      console.log(error)
          res.status(500).json({success:false,message:"Internal Server Error"})
     }
 }
 
+
+// CREATE NEW EMPLOYEE
 
 export const CreateEmployee = async (req,res) => {
   try {

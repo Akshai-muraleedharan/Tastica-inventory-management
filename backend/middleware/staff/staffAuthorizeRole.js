@@ -7,8 +7,6 @@ export const staffAuthorizeRole = (...roles) => {
          return res.status(401).json({ message: "Unauthorized role" });
         }
 
-        
-
           let  userRole = req.user.role;      
           
         if (!roles.includes(userRole)) {

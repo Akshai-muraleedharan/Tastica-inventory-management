@@ -1,6 +1,5 @@
 import AdminStaffModel from '../model/adminAndStaffModel.js';
 import {LoginValidation} from '../utils/joiValidation.js';
-import jwt from 'jsonwebtoken'
 import { comparePassword } from '../utils/comparePassword.js';
 import { generateToken } from '../utils/generateToken.js';
 
@@ -12,7 +11,7 @@ export const loginUser = async (req,res) => {
     try{
       const {error,value} = LoginValidation.validate(req.body);
 
-      const tokenExist = req.cookies.token;
+      // const tokenExist = req.cookies.token;
 
       if(error){
         return res.status(400).json({ message: error.details[0].message });
@@ -33,21 +32,22 @@ export const loginUser = async (req,res) => {
             return res.status(400).json({success:false,message:"Invalid credentials"})
         }
 
-        if(tokenExist){
-            return res.status(400).json({success:false,message:"You are already logged in"})
-        }
+        // if(tokenExist){
+        //     return res.status(400).json({success:false,message:"You are already logged in"})
+        // }
       
-
-        // to update staff logged in Status
-         await AdminStaffModel.findOneAndUpdate({phonenumber:phonenumber},{isLoggedIn:true},{new:true});
+        // // to update staff logged in Status
+        //  await AdminStaffModel.findOneAndUpdate({phonenumber:phonenumber},{isLoggedIn:true},{new:true});
         
                
         const token = generateToken({id:userExist._id,role:userExist.role});
 
+        const {password:pass,...userData} = userExist._doc;
+
         res.cookie("token",token,{httpOnly:true,secure:true,sameSite:"none",maxAge:5 * 60 * 1000}).status(200).json({
             success:true,
             message:"Login Successfully",
-           
+            userData
         })
 
     }catch(error){

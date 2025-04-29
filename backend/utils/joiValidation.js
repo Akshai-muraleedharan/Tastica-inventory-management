@@ -47,3 +47,21 @@ export const LoginValidation = Joi.object({
         'string.empty': 'Password cannot be empty',
     }),
 })
+
+
+export const shopSignupValidtaion = Joi.object({
+    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required().messages({
+        'string.required': 'Email is required',
+        'string.base': 'Email must be a string',
+        'string.empty': 'Email cannot be empty',
+        'string.email': 'Email must be a valid email address',
+    }),
+
+    password: Joi.string().min(8).max(20).pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required().messages({
+        'string.required': 'Password is required',
+        'string.empty': 'Password cannot be empty',
+        'string.min': 'Password must be at least 8 characters long',
+        'string.max': 'Password must be at most 20 characters long',
+        'string.pattern.base': 'Password must contain only letters, numbers or characters',
+    }),
+})

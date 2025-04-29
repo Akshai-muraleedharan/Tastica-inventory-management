@@ -7,6 +7,8 @@ import { adminAuthorizeRole } from '../../../middleware/admin/adminAuthorizeRole
 
 const productRouter = express.Router();
 
+
+// for test
 productRouter.get('/',verifyAuthStaffToken,staffAuthorizeRole("staff"),productListTest)
 productRouter.get('/test',verifyAuthAdminToken,adminAuthorizeRole('admin',),productListTestforAdmin)
 
