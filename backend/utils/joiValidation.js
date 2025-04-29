@@ -87,3 +87,44 @@ export const shopLoginValidation = Joi.object({
         'string.empty': 'Password cannot be empty',
     })
 }) 
+
+export const newProductValidation = Joi.object({
+    productname: Joi.string().min(3).max(30).required().messages({
+        'string.required': 'Product name is required',
+        'string.base': 'Product name must be a string',
+        'string.empty': 'Product name cannot be empty',
+        'string.min': 'Product name must be at least 3 characters long',
+        'string.max': 'Product name must be at most 30 characters long',   
+    }),
+
+    quantity: Joi.number().integer().min(1).required().messages({
+        'number.required': 'Quanity is required',
+        'number.base': 'Quanity must be a number',
+        'number.empty': 'Quanity cannot be empty',
+    }),
+    
+    costprice:Joi.number().integer().min(0).messages({
+        'number.base': 'Cost price must be a number',
+        'number.empty': 'Cost price cannot be empty',
+    }),
+
+    sellingprice: Joi.number().integer().min(0).messages({
+        'number.base': 'Selling price must be a number',
+        'number.empty': 'Selling price cannot be empty',
+    }),
+
+    discount: Joi.number().integer().min(0).messages({
+        'number.base': 'Discount must be a number',
+        'number.empty': 'Discount cannot be empty',
+    }),
+
+    category:Joi.string().min(3).max(30).required().messages({
+        'string.required': 'Category is required',
+        'string.base': 'Category must be a string',
+        'string.empty': 'Category cannot be empty',
+        'string.min': 'Category must be at least 3 characters long',
+        'string.max': 'Category must be at most 30 characters long',   
+    })
+
+    
+})

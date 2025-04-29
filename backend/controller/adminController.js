@@ -1,8 +1,7 @@
 import AdminStaffModel from "../model/adminAndStaffModel.js";
 import { comparePassword } from "../utils/comparePassword.js";
-import { LoginValidation } from "../utils/joiValidation.js";
+import { LoginValidation,userSignupValidation } from "../utils/joiValidation.js";
 import bcryptjs from 'bcryptjs';
-import {userSignupValidation} from '../utils/joiValidation.js';
 import { generateToken } from "../utils/generateToken.js";
 
  

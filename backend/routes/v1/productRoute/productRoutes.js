@@ -1,5 +1,5 @@
 import express from 'express';
-import { productListTest,productListTestforAdmin } from '../../../controller/productController.js';
+import { createProduct, productListTest,productListTestforAdmin } from '../../../controller/productController.js';
 import { verifyAuthStaffToken } from '../../../middleware/staff/authStaffVerifyToken.js';
 import { staffAuthorizeRole } from '../../../middleware/staff/staffAuthorizeRole.js';
 import { verifyAuthAdminToken } from '../../../middleware/admin/authAdminVerifyToken.js';
@@ -7,6 +7,8 @@ import { adminAuthorizeRole } from '../../../middleware/admin/adminAuthorizeRole
 
 const productRouter = express.Router();
 
+
+productRouter.post('/create',createProduct)
 
 // for test
 productRouter.get('/',verifyAuthStaffToken,staffAuthorizeRole("staff"),productListTest)

@@ -14,7 +14,7 @@ import mongoose from 'mongoose';
         type:String,
         required:true,
     }
- });
+ },{timestamps:true});
 
  const shopModel = mongoose.model('Shop',shopSchema);
 

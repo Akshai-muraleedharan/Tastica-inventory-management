@@ -35,7 +35,7 @@ import mongoose from 'mongoose';
     },
     
    
- })
+ },{timestamps:true})
 
  const AdminStaffModel = mongoose.model('user',userSchema);
 
